@@ -42,6 +42,52 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(); //return class scaffold (scaffold merupakan tampilan meterial design flutter)
+    return Scaffold( //return class scaffold (scaffold merupakan tampilan meterial design flutter)
+      appBar: AppBar( //appbar merupakan header aplikasi (biasanya diisi judul atau actionButton)
+        title: const Text(
+          'First Screen',
+          style: TextStyle(
+            color: Colors.white, //mengganti warna text
+          ),
+        ),
+        backgroundColor: Colors.blue, //warna background
+        actions: <Widget>[ //actions menampung <1 widget
+          IconButton(
+            icon: const Icon( //icon search dengan warna putih
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {}, //jika ditekan maka ...
+          ),
+        ],
+        leading: IconButton( //leading menampung satu widget
+          //iconButton harus ada fungsi onPressed
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {}, //jika dikan maka...
+        ),
+      ),
+      // untuk isi/body
+      body: const Center(
+        child: Text(
+          'Hello World',
+          style: TextStyle(
+            fontSize: 30,
+          ),
+        ),
+      ),
+      //untuk button di kanan bawah
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(), //agar action button lingkaran
+        backgroundColor: Colors.blue,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {},
+      ),
+    );
   }
 }
