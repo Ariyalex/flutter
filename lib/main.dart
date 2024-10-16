@@ -7,27 +7,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         primarySwatch: Colors.blue,
       ),
       home: const FirstScreen(),
@@ -35,52 +19,135 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//make stateless widget with return scaffold
-class FirstScreen extends StatelessWidget {
-  const FirstScreen ({super.key});
+// Mengubah dari StatelessWidget menjadi StatefulWidget
+class FirstScreen extends StatefulWidget {
+  const FirstScreen({super.key});
+
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  String? bahasa; // Variabel untuk menyimpan pilihan dropdown
+  String _name = '';
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold( //return class scaffold (scaffold merupakan tampilan meterial design flutter)
-      appBar: AppBar( //appbar merupakan header aplikasi (biasanya diisi judul atau actionButton)
-        title: const Text(
-          'First Screen',
-          style: TextStyle(
-            color: Colors.white, //mengganti warna text
+    return Scaffold( // return class scaffold (scaffold merupakan tampilan material design flutter)
+      appBar: AppBar( // appbar merupakan header aplikasi (biasanya diisi judul atau actionButton)
+        title: Container( // contoh implementasi container (container biasanya untuk styling)
+          decoration: BoxDecoration(
+            color: Colors.red,
+            border: Border.all(color: Colors.white, width: 3),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: 100,
+          child: const Text(
+            "Hallo",
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
           ),
         ),
-        backgroundColor: Colors.blue, //warna background
-        actions: <Widget>[ //actions menampung <1 widget
+        backgroundColor: Colors.blue, // warna background
+        actions: <Widget>[ // actions menampung <1 widget
           IconButton(
-            icon: const Icon( //icon search dengan warna putih
+            icon: const Icon( // icon search dengan warna putih
               Icons.search,
               color: Colors.white,
             ),
-            onPressed: () {}, //jika ditekan maka ...
+            onPressed: () {}, // jika ditekan maka ...
           ),
         ],
-        leading: IconButton( //leading menampung satu widget
-          //iconButton harus ada fungsi onPressed
+        leading: IconButton( // leading menampung satu widget
+          // iconButton harus ada fungsi onPressed
           icon: const Icon(
             Icons.menu,
             color: Colors.white,
           ),
-          onPressed: () {}, //jika dikan maka...
+          onPressed: () {}, // jika ditekan maka ...
         ),
       ),
       // untuk isi/body
-      body: const Center(
-        child: Text(
-          'Hello World',
-          style: TextStyle(
-            fontSize: 30,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          TextField(
+            decoration: const InputDecoration(
+              hintText: 'Tulis namamu',
+              labelText: "Namamu",
+            ),
+            onChanged: (String value) {
+              setState(() {
+                _name = value;
+              });
+            },
           ),
-        ),
+          const SizedBox(height: 20,),
+          ElevatedButton(
+            child: const Text("Submit"),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text("hello, $_name"),
+                    );
+                  });
+            },
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Icon(Icons.share),
+              Icon(Icons.thumb_up),
+              Icon(Icons.thumb_down),
+            ],
+          ),
+          Center(
+            child: Container( // contoh penerapan container
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                "hallo bang",
+                style: TextStyle(color: Colors.white, fontSize: 30),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          DropdownButton<String>(
+            items: const <DropdownMenuItem<String>>[
+              DropdownMenuItem<String>(
+                value: "JavaScript",
+                child: Text("Java Script"),
+              ),
+              DropdownMenuItem<String>(
+                value: "C++",
+                child: Text("C++"),
+              ),
+              DropdownMenuItem<String>(
+                value: "Python",
+                child: Text("Python"),
+              ),
+            ],
+            value: bahasa, // Nilai yang dipilih
+            hint: const Text("Pilih Bahasa Pemrograman"),
+            onChanged: (String? value) {
+              setState(() {
+                bahasa = value; // Update nilai dropdown
+              });
+            },
+          )
+        ],
       ),
-      //untuk button di kanan bawah
+      // untuk button di kanan bawah
       floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(), //agar action button lingkaran
+        shape: const CircleBorder(), // agar action button lingkaran
         backgroundColor: Colors.blue,
         child: const Icon(
           Icons.add,
