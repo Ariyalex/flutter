@@ -30,6 +30,13 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   String? bahasa; // Variabel untuk menyimpan pilihan dropdown
   String _name = '';
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class _FirstScreenState extends State<FirstScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        backgroundColor: Colors.blue, // warna background
+        backgroundColor: Colors.blue, // warna background, Colors harus menggunakan 0xFF untuk warna tidak transparan, lalu dilanjut kodenya.
         actions: <Widget>[ // actions menampung <1 widget
           IconButton(
             icon: const Icon( // icon search dengan warna putih
@@ -76,11 +83,18 @@ class _FirstScreenState extends State<FirstScreen> {
               hintText: 'Tulis namamu',
               labelText: "Namamu",
             ),
-            onChanged: (String value) {
+            onSubmitted: (String value) {
               setState(() {
                 _name = value;
               });
             },
+          ),
+          TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              hintText: 'tulis hobi',
+              labelText: 'hobi',
+            ),
           ),
           const SizedBox(height: 20,),
           ElevatedButton(
@@ -90,11 +104,26 @@ class _FirstScreenState extends State<FirstScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text("hello, $_name"),
+                      content: Text("hello, $_name!"),
                     );
                   });
             },
           ),
+          Switch(
+            value: lightOn,
+            onChanged: (bool value) {
+              setState(() {
+                lightOn = value;
+              });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(lightOn ? 'Light On' : 'Light Off'),
+                  duration: ,
+                )
+              )
+            },
+          )
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -114,7 +143,7 @@ class _FirstScreenState extends State<FirstScreen> {
               ),
               padding: const EdgeInsets.all(10),
               child: const Text(
-                "hallo bang",
+                "hallo ariya duta :V",
                 style: TextStyle(color: Colors.white, fontSize: 30),
                 textAlign: TextAlign.center,
               ),
