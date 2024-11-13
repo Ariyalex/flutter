@@ -24,10 +24,10 @@ class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
 
   @override
-  _FirstScreenState createState() => _FirstScreenState();
+  FirstScreenState createState() => FirstScreenState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class FirstScreenState extends State<FirstScreen> {
   String? bahasa; // Variabel untuk menyimpan pilihan dropdown
   String _name = '';
   final TextEditingController _controller = TextEditingController();
@@ -106,7 +106,7 @@ class _FirstScreenState extends State<FirstScreen> {
           ),
           Image.asset(
             'images/download.jpg',
-            height: 50,
+            height: 85,
             fit: BoxFit.contain,
           ),
           ListTile(
@@ -225,7 +225,7 @@ class _FirstScreenState extends State<FirstScreen> {
               padding: const EdgeInsets.all(10),
               child: const Text(
                 "hallo ariya duta :V",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'Oswald'),
                 textAlign: TextAlign.center,
               ),
             ),
