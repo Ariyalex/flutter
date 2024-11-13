@@ -30,7 +30,7 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   String? bahasa; // Variabel untuk menyimpan pilihan dropdown
   String _name = '';
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   bool lightOn = false;
   String? language;
   bool agree = false;
@@ -105,7 +105,7 @@ class _FirstScreenState extends State<FirstScreen> {
             fit: BoxFit.contain,
           ),
           Image.asset(
-            'image/capek.jpg',
+            'images/download.jpg',
             height: 50,
             fit: BoxFit.contain,
           ),
@@ -124,7 +124,7 @@ class _FirstScreenState extends State<FirstScreen> {
                 });
               },
             ),
-            title: Text('Agree / Disagree'),
+            title: const Text('Agree / Disagree'),
           ),
           ListTile(
             leading: Radio<String>(value: 'Dart', groupValue: language, onChanged: (String? value) {
