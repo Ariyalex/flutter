@@ -31,6 +31,9 @@ class _FirstScreenState extends State<FirstScreen> {
   String? bahasa; // Variabel untuk menyimpan pilihan dropdown
   String _name = '';
   TextEditingController _controller = TextEditingController();
+  bool lightOn = false;
+  String? language;
+  bool agree = false;
 
   @override
   void dispose() {
@@ -96,6 +99,84 @@ class _FirstScreenState extends State<FirstScreen> {
               labelText: 'hobi',
             ),
           ),
+          Image.network(
+            'https://i.pinimg.com/736x/8d/bb/a0/8dbba073e8213a25474cd6febade8e11.jpg',
+            height: 85,
+            fit: BoxFit.contain,
+          ),
+          Image.asset(
+            'image/capek.jpg',
+            height: 50,
+            fit: BoxFit.contain,
+          ),
+          ListTile(
+            leading: Checkbox(
+              value: agree,
+              onChanged: (bool? value) {
+                setState(() {
+                  agree = value!;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(agree ? 'setuju' : 'tidak setuju'),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                });
+              },
+            ),
+            title: Text('Agree / Disagree'),
+          ),
+          ListTile(
+            leading: Radio<String>(value: 'Dart', groupValue: language, onChanged: (String? value) {
+              setState(() {
+                language = value;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Swift selected'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              });
+            },
+            ),
+            title: const Text('Dart'),
+          ),
+          ListTile(
+            leading: Radio<String>(
+              value: 'Kotlin',
+              groupValue: language,
+              onChanged: (String? value) {
+                setState(() {
+                  language = value;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Swift selected'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                });
+              },
+            ),
+            title: const Text('Kotlin'),
+          ),
+          ListTile(
+            leading: Radio<String>(
+              value: 'Swift',
+              groupValue: language,
+              onChanged: (String? value) {
+                setState(() {
+                  language = value;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Swift selected'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                });
+              },
+            ),
+            title: const Text('Swift'),
+          ),
           const SizedBox(height: 20,),
           ElevatedButton(
             child: const Text("Submit"),
@@ -119,11 +200,11 @@ class _FirstScreenState extends State<FirstScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(lightOn ? 'Light On' : 'Light Off'),
-                  duration: ,
-                )
-              )
+                  duration: const Duration(seconds: 1),
+                ),
+              );
             },
-          )
+          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -144,7 +225,7 @@ class _FirstScreenState extends State<FirstScreen> {
               padding: const EdgeInsets.all(10),
               child: const Text(
                 "hallo ariya duta :V",
-                style: TextStyle(color: Colors.white, fontSize: 30),
+                style: TextStyle(color: Colors.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
