@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scaffold/fourth_page.dart';
+import 'package:scaffold/third_page.dart';
 import 'second_page.dart';
 void main() {
   runApp(const MyApp());
@@ -53,7 +55,7 @@ class FirstScreenState extends State<FirstScreen> {
           ),
           width: 100,
           child: const Text(
-            "Hallo",
+            "Header",
             style: TextStyle(color: Colors.white),
             textAlign: TextAlign.center,
           ),
@@ -71,15 +73,10 @@ class FirstScreenState extends State<FirstScreen> {
         leading: IconButton( // leading menampung satu widget
           // iconButton harus ada fungsi onPressed
           icon: const Icon(
-            Icons.add,
+            Icons.menu,
             color: Colors.white,
           ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SecondPage()),
-            );
-          }, // jika ditekan maka ...
+          onPressed: () {}, // jika ditekan maka ...
         ),
       ),
       // untuk isi/body
@@ -260,6 +257,33 @@ class FirstScreenState extends State<FirstScreen> {
                     });
                   },
                 ),
+                ElevatedButton(
+                  child: const Text("second page"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SecondPage()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text("third page"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ThirdPage()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text("fourth page"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ExpandedFlexiblePage()),
+                    );
+                  },
+                )
               ],
             ),
           ],
