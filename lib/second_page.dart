@@ -13,6 +13,18 @@ class SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('list view', style: TextStyle(color: Colors.white),),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        backgroundColor: Colors.blue,
+      ),
+
       body: ListView.separated(
         itemCount: numberList.length,
         itemBuilder: (BuildContext context, int index) {

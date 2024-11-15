@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scaffold/fourth_page.dart';
 import 'package:scaffold/third_page.dart';
-import 'second_page.dart';
+import 'package:scaffold/second_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -181,7 +181,6 @@ class FirstScreenState extends State<FirstScreen> {
                   ),
                   title: const Text('Swift'),
                 ),
-                const SizedBox(height: 20,),
                 ElevatedButton(
                   child: const Text("Submit"),
                   onPressed: () {

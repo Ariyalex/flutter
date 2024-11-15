@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
 
-class ExpandedFlexiblePage extends StatefulWidget {
+
+class ExpandedFlexiblePage extends StatelessWidget {
   const ExpandedFlexiblePage({super.key});
 
   @override
-  State<ExpandedFlexiblePage> createState() => _ExpandedFlexiblePageState();
-}
-
-class _ExpandedFlexiblePageState extends State<ExpandedFlexiblePage> {
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expanded & Flexible', style: TextStyle(color: Colors.white),),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        backgroundColor: Colors.blue,
+      ),
+      body: const SafeArea(
         child: Column(children: [
           Row(
             children: [
-              Row(
-                children: [
-                  ExpandedWidget(),
-                  FlexibleWidget(),
-                ],
-              ),
-              Row(
-                children: [
-                  FlexibleWidget(),
-                  FlexibleWidget(),
-                ],
-              ),
-              Row(
-                children: [
-                  FlexibleWidget(),
-                  ExpandedWidget(),
-                ],
-              )
+              ExpandedWidget(),
+              FlexibleWidget(),
+            ],
+          ),
+          Row(
+            children: [
+              FlexibleWidget(),
+              FlexibleWidget(),
+            ],
+          ),
+          Row(
+            children: [
+              FlexibleWidget(),
+              ExpandedWidget(),
             ],
           ),
         ],),
@@ -41,6 +44,7 @@ class _ExpandedFlexiblePageState extends State<ExpandedFlexiblePage> {
   }
 }
 
+//expanded widget untuk membuat widget yang bisa mengisi ruang kosong yang tersisa
 class ExpandedWidget extends StatelessWidget {
   const ExpandedWidget({super.key});
 
@@ -66,6 +70,7 @@ class ExpandedWidget extends StatelessWidget {
   }
 }
 
+//flexible widget untuk membuat widget yang bisa menyesuaikan ukuran widget lain
 class FlexibleWidget extends StatelessWidget {
   const FlexibleWidget({super.key});
 

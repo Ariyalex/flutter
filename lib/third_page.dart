@@ -8,50 +8,60 @@ class ThirdPage extends StatefulWidget {
 }
 
 class ThirdPageState extends State<ThirdPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        //expanded widget untuk memperluas widget ke sisa ruang yang tersedia
-        //ini memiliki nilai flex default 1
-        Expanded(
-          flex: 2,
-          child: Container(
-            color: Colors.red,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expanded', style: TextStyle(color: Colors.white),),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.orange,
+        backgroundColor: Colors.blue,
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.red,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.yellow,
+          Expanded(
+            child: Container(
+              color: Colors.orange,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.green,
+          Expanded(
+            child: Container(
+              color: Colors.yellow,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blue,
+          Expanded(
+            child: Container(
+              color: Colors.green,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.indigo,
+          Expanded(
+            child: Container(
+              color: Colors.blue,
+            ),
           ),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.purple,
+          Expanded(
+            child: Container(
+              color: Colors.indigo,
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Container(
+              color: Colors.purple,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
