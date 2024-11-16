@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatefulWidget {
-  const SecondPage({super.key});
+  final String message; //membuat variabel message
+  const SecondPage(this.message, {super.key}); //mengirim pesan dari halaman pertama
 
   @override
   SecondPageState createState() => SecondPageState();
@@ -24,27 +25,33 @@ class SecondPageState extends State<SecondPage> {
           ),
         backgroundColor: Colors.blue,
       ),
-
-      body: ListView.separated(
-        itemCount: numberList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            height: 250,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              border: Border.all(color: Colors.black),
+      body: Column(
+        children: [
+          Text(widget.message, style: const TextStyle(fontSize: 20)), //menampilkan pesan yang dikirim dari halaman pertama
+          Expanded(
+            child: ListView.separated(
+              itemCount: numberList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${numberList[index]}',
+                      style: const TextStyle(fontSize: 50),
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
             ),
-            child: Center(
-              child: Text(
-                '${numberList[index]}',
-                style: const TextStyle(fontSize: 50),
-              ),
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
-        },
+          ),
+        ],
       ),
     );
   }

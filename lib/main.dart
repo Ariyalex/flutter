@@ -37,6 +37,8 @@ class FirstScreenState extends State<FirstScreen> {
   bool lightOn = false;
   String? language;
   bool agree = false;
+  final String message = 'Hello form FistScreen';
+
   @override
   void dispose() {
     _controller.dispose();
@@ -45,6 +47,7 @@ class FirstScreenState extends State<FirstScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold( // return class scaffold (scaffold merupakan tampilan material design flutter)
       appBar: AppBar( // appbar merupakan header aplikasi (biasanya diisi judul atau actionButton)
         title: Container( // contoh implementasi container (container biasanya untuk styling)
@@ -136,7 +139,7 @@ class FirstScreenState extends State<FirstScreen> {
                       language = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Swift selected'),
+                          content: Text('Dart selected'),
                           duration: Duration(seconds: 1),
                         ),
                       );
@@ -154,7 +157,7 @@ class FirstScreenState extends State<FirstScreen> {
                         language = value;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Swift selected'),
+                            content: Text('Kotlin selected'),
                             duration: Duration(seconds: 1),
                           ),
                         );
@@ -261,7 +264,7 @@ class FirstScreenState extends State<FirstScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SecondPage()),
+                      MaterialPageRoute(builder: (context) => SecondPage(message)), //mengirim pesan ke halaman kedua
                     );
                   },
                 ),
