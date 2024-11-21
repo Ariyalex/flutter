@@ -104,8 +104,8 @@ class FirstScreenState extends State<FirstScreen> {
                 TextField(
                   controller: _controller,
                   decoration: const InputDecoration(
-                    hintText: 'tulis hobi',
-                    labelText: 'hobi',
+                    hintText: 'Your Hobby',
+                    labelText: 'Hobby',
                   ),
                 ),
                 Padding(
