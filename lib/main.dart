@@ -2,7 +2,112 @@ import 'package:flutter/material.dart';
 import 'package:scaffold/fourth_page.dart';
 import 'package:scaffold/third_page.dart';
 import 'package:scaffold/second_page.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:timezone/data/latest_all.dart' as tz; // Correct import for initializeTimeZones
+import 'package:timezone/timezone.dart' as tz; // Add 'tz' prefix
+import 'dart:io';
+import 'package:logger/logger.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+class NotificationApi {
+  static final _notifications = FlutterLocalNotificationsPlugin();
+  static final onNotifications = BehaviorSubject<String?>();
+  static final Logger _logger = Logger();
+
+  static bool notificationPermission = true;
+
+  static Future _notificationDetails() async {
+    return const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'channelID',
+        'channelName',
+        channelDescription: 'channelDescription',
+        //importance: Importance.unspecified,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
+  }
+
+  static Future init({bool initScheduled = false}) async {
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const ios = DarwinInitializationSettings();
+    const settings = InitializationSettings(android: android, iOS: ios);
+
+    //When app is closed
+    final details = await _notifications.getNotificationAppLaunchDetails();
+    if (details != null && details.didNotificationLaunchApp) {
+      onNotifications.add(details.notificationResponse?.payload);
+    }
+
+    await _notifications.initialize(settings,
+        onDidReceiveNotificationResponse: ((payload) async {
+      onNotifications.add(payload.payload);
+    }));
+
+    if (initScheduled) {
+      tz.initializeTimeZones(); // Initialize time zones with 'tz' prefix
+      try {
+        tz.setLocalLocation(tz.getLocation('Asia/Jakarta')); // Set local location with 'tz' prefix
+      } catch (e) {
+        _logger.e('Error initializing timezone: $e');
+      }
+    }
+  }
+
+  //This is how to request and check permissions on ANDROID and IOS
+  static Future<bool?> checkNotificationPermissions() async {
+    if (Platform.isAndroid) {
+      _notifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestExactAlarmsPermission();
+      await _notifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+
+      return await _notifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.areNotificationsEnabled();
+    }
+    return null;
+  }
+
+  static void showScheduledNotification({
+    required int id, //This must be a unique ID I recommend a UUID package
+    String? title, 
+    String? body,
+    String? payload,
+    required DateTime scheduledDate, //When you want the notification to happen
+  }) async =>
+      _notifications.zonedSchedule(id, title, body,
+          tz.TZDateTime.from(scheduledDate, tz.local), await _notificationDetails(), // Use 'tz' prefix
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          payload: payload);
+
+  static void showNotification({
+    required int id,
+    String? title,
+    String? body,
+    String? payload,
+  }) async =>
+      _notifications.show(id, title, body, await _notificationDetails(), payload: payload);
+
+  static void cancel(int id) => _notifications.cancel(id);
+  static void cancelAll() => _notifications.cancelAll();
+}
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Jakarta'));
   runApp(const MyApp());
 }
 
@@ -87,6 +192,20 @@ class FirstScreenState extends State<FirstScreen> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: OutlinedButton(
+                onPressed: () {
+                  NotificationApi.showScheduledNotification(
+                    id: 0,
+                    title: 'Scheduled Notification',
+                    body: 'This is a scheduled notification',
+                    scheduledDate: DateTime.now().add(const Duration(seconds: 5)),
+                  );
+                },
+                child: const Text('Show Scheduled Notification'),
+              ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
